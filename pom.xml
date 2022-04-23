@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.liuyang19900520</groupId>
+  <artifactId>laymanmall</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>laymanmall</name>
+  <description>laymanmall</description>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>laymanmall-common</module>
+    <module>laymanmall-coupon</module>
+    <module>laymanmall-member</module>
+    <module>laymanmall-product</module>
+    <module>laymanmall-order</module>
+    <module>laymanmall-ware</module>
+
+  </modules>
+
+
+</project>
