@@ -17,6 +17,8 @@
     <module>laymanmall-product</module>
     <module>laymanmall-order</module>
     <module>laymanmall-ware</module>
+    <module>renren-fast</module>
+    <module>renren-generator</module>
 
   </modules>
 
