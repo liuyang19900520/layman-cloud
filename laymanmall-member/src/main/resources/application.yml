@@ -5,11 +5,15 @@ spring:
   datasource:
     #MySQL配置
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.16.33.33:3306/gulimall_sms?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://172.16.33.33:3306/gulimall_ums?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
   application:
-    name: layman-coupon
+    name: layman-member
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
@@ -17,18 +21,6 @@ spring:
   redis:
     host: 172.16.33.33
     port: 6379
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-
-
-
-
-
-
-
-
 
 
 
