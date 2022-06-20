@@ -1,5 +1,7 @@
 package com.liuyang19900520.laymanmall.product.service.impl;
 
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -14,16 +16,23 @@ import com.liuyang19900520.laymanmall.product.service.CategoryService;
 
 
 @Service("categoryService")
-public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements
+  CategoryService {
 
-    @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        IPage<CategoryEntity> page = this.page(
-                new Query<CategoryEntity>().getPage(params),
-                new QueryWrapper<CategoryEntity>()
-        );
+  @Autowired
+  CategoryDao categoryDao;
 
-        return new PageUtils(page);
-    }
+  @Override
+  public PageUtils queryPage(Map<String, Object> params) {
+    IPage<CategoryEntity> page = this.page(new Query<CategoryEntity>().getPage(params),
+      new QueryWrapper<CategoryEntity>());
 
+    return new PageUtils(page);
+  }
+
+  @Override
+  public List<CategoryEntity> listWithTree() {
+    List<CategoryEntity> categoryEntities = categoryDao.selectList(null);
+    return categoryEntities;
+  }
 }

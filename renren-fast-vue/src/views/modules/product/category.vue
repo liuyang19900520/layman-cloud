@@ -3,44 +3,21 @@
     <el-switch v-model="draggable" active-text="开启拖拽" inactive-text="关闭拖拽"></el-switch>
     <el-button v-if="draggable" @click="batchSave">批量保存</el-button>
     <el-button type="danger" @click="batchDelete">批量删除</el-button>
-    <el-tree
-      :data="menus"
-      :props="defaultProps"
-      :expand-on-click-node="false"
-      show-checkbox
-      node-key="catId"
-      :default-expanded-keys="expandedKey"
-      :draggable="draggable"
-      :allow-drop="allowDrop"
-      @node-drop="handleDrop"
-      ref="menuTree"
-    >
+    <el-tree :data="menus" :props="defaultProps" :expand-on-click-node="false" show-checkbox node-key="catId"
+      :default-expanded-keys="expandedKey" :draggable="draggable" :allow-drop="allowDrop" @node-drop="handleDrop"
+      ref="menuTree">
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
         <span>
-          <el-button
-            v-if="node.level <=2"
-            type="text"
-            size="mini"
-            @click="() => append(data)"
-          >Append</el-button>
+          <el-button v-if="node.level <= 2" type="text" size="mini" @click="() => append(data)">Append</el-button>
           <el-button type="text" size="mini" @click="edit(data)">edit</el-button>
-          <el-button
-            v-if="node.childNodes.length==0"
-            type="text"
-            size="mini"
-            @click="() => remove(node, data)"
-          >Delete</el-button>
+          <el-button v-if="node.childNodes.length == 0" type="text" size="mini" @click="() => remove(node, data)">Delete
+          </el-button>
         </span>
       </span>
     </el-tree>
 
-    <el-dialog
-      :title="title"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :close-on-click-modal="false"
-    >
+    <el-dialog :title="title" :visible.sync="dialogVisible" width="30%" :close-on-click-modal="false">
       <el-form :model="category">
         <el-form-item label="分类名称">
           <el-input v-model="category.name" autocomplete="off"></el-input>
@@ -136,7 +113,7 @@ export default {
             this.getMenus();
           });
         })
-        .catch(() => {});
+        .catch(() => { });
     },
     batchSave() {
       this.$http({
@@ -359,7 +336,7 @@ export default {
             this.expandedKey = [node.parent.data.catId];
           });
         })
-        .catch(() => {});
+        .catch(() => { });
 
       console.log("remove", node, data);
     }
@@ -369,14 +346,14 @@ export default {
     this.getMenus();
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
-  beforeCreate() {}, //生命周期 - 创建之前
-  beforeMount() {}, //生命周期 - 挂载之前
-  beforeUpdate() {}, //生命周期 - 更新之前
-  updated() {}, //生命周期 - 更新之后
-  beforeDestroy() {}, //生命周期 - 销毁之前
-  destroyed() {}, //生命周期 - 销毁完成
-  activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
+  mounted() { },
+  beforeCreate() { }, //生命周期 - 创建之前
+  beforeMount() { }, //生命周期 - 挂载之前
+  beforeUpdate() { }, //生命周期 - 更新之前
+  updated() { }, //生命周期 - 更新之后
+  beforeDestroy() { }, //生命周期 - 销毁之前
+  destroyed() { }, //生命周期 - 销毁完成
+  activated() { } //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
 <style scoped>

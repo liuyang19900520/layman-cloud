@@ -9,7 +9,7 @@ spring:
     username: root
     password: root
   application:
-    name: gulimall-product
+    name: layman-product
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:

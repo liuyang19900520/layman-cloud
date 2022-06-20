@@ -1,0 +1,53 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+          #多种路由规则
+        - id: product_route
+          uri: lb://layman-product
+          # 指定的路径，
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+          #lb代表负载均衡
+        - id: admin_route
+          uri: lb://renren-fast
+          # 定义规则，代表前端规则发送请求时带上api前缀
+          predicates:
+            - Path=/api/**
+          # 路径重写，将api开头的路径转换成renren-fast路径
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
+
+#        - id: third_party_route
+#          uri: lb://gulimall-third-party
+#          predicates:
+#            - Path=/api/thirdparty/**
+#          filters:
+#            - RewritePath=/api/thirdparty/(?<segment>/?.*),/$\{segment}
+#
+#        - id: member_route
+#          uri: lb://gulimall-member
+#          predicates:
+#            - Path=/api/member/**
+#          filters:
+#            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+#
+#        - id: ware_route
+#          uri: lb://gulimall-ware
+#          predicates:
+#            - Path=/api/ware/**
+#          filters:
+#            - RewritePath=/api/(?<segment>/?.*),/$\{segment}
+#
+
+#        - id: gulimall_host_route
+#          uri: lb://gulimall-product
+#          predicates:
+#            - Host=gulimall.com,item.gulimall.com
+#
+#        - id: gulimall_search_route
+#          uri: lb://gulimall-search
+#          predicates:
+#            - Host=search.gulimall.com
