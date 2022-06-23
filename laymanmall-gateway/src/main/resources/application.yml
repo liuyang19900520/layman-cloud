@@ -2,21 +2,21 @@ spring:
   cloud:
     gateway:
       routes:
-          #多种路由规则
+          #多种路由规则，首先定义id,product服务
         - id: product_route
+          #lb代表负载均衡，服务名称
           uri: lb://layman-product
           # 指定的路径，
           predicates:
+            # 定义规则，代表前端规则发送请求时带上api前缀
             - Path=/api/product/**
           filters:
+            # 路径重写，将api开头的路径转换成product的路径，类似于转发了
             - RewritePath=/api/(?<segment>/?.*),/$\{segment}
-          #lb代表负载均衡
         - id: admin_route
           uri: lb://renren-fast
-          # 定义规则，代表前端规则发送请求时带上api前缀
           predicates:
             - Path=/api/**
-          # 路径重写，将api开头的路径转换成renren-fast路径
           filters:
             - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
 

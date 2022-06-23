@@ -1,0 +1,21 @@
+server:
+  port: 30000
+spring:
+  application:
+    name: layman-third-party
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+
+
+
+
+
+
+
+
