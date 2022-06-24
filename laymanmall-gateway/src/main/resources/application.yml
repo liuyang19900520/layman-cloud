@@ -2,7 +2,7 @@ spring:
   cloud:
     gateway:
       routes:
-          #多种路由规则，首先定义id,product服务
+        #多种路由规则，首先定义id,product服务
         - id: product_route
           #lb代表负载均衡，服务名称
           uri: lb://layman-product
@@ -20,13 +20,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
 
-#        - id: third_party_route
-#          uri: lb://gulimall-third-party
-#          predicates:
-#            - Path=/api/thirdparty/**
-#          filters:
-#            - RewritePath=/api/thirdparty/(?<segment>/?.*),/$\{segment}
-#
+        - id: third_party_route
+          uri: lb://layman-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>/?.*),/$\{segment}
+
 #        - id: member_route
 #          uri: lb://gulimall-member
 #          predicates:
