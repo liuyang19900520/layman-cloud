@@ -20,9 +20,9 @@ import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequ
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 @RestController
-public class OssController {
+public class S3Controller {
 
-  @RequestMapping("/s3/policy/{fileName}")
+  @RequestMapping("/sxx/policy/{fileName}")
   public R policy(@PathVariable("fileName") String fileName) {
 
     Map<String, String> respMap = new HashMap<>();
@@ -46,11 +46,13 @@ public class OssController {
         .signatureDuration(Duration.ofMinutes(10)).putObjectRequest(objectRequest).build();
 
       PresignedPutObjectRequest presignedRequest = presigner.presignPutObject(presignRequest);
-
       String myURL = presignedRequest.url().toString();
       System.out.println("Presigned URL to upload a file to: " + myURL);
       System.out.println("Which HTTP method needs to be used when uploading a file: "
         + presignedRequest.httpRequest().method());
+
+      // Upload content to the Amazon S3 bucket by using this URL.
+      URL url = presignedRequest.url();
 
       respMap = new LinkedHashMap<String, String>();
 //      respMap.put("accessid", accessId);

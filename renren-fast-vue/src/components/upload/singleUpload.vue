@@ -1,9 +1,7 @@
 <template> 
   <div>
-    <el-upload :action=signedUrl :headers="{
-      'Content-Type': 'multipart/form-data'
-    }" :data="dataObj" list-type="picture" :multiple="false" :show-file-list="showFileList" :file-list="fileList"
-      :before-upload="beforeUpload" :on-remove="handleRemove" :on-success="handleUploadSuccess"
+    <el-upload :action="signedUrl" :data="dataObj" list-type="picture" :multiple="false" :show-file-list="showFileList"
+      :file-list="fileList" :before-upload="beforeUpload" :on-remove="handleRemove" :on-success="handleUploadSuccess"
       :http-request="upload2S3" :on-preview="handlePreview">
       <el-button size="small" type="primary">点击上传</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10MB</div>
@@ -92,30 +90,27 @@ export default {
         })
       })
     },
-    upload2S3() {
-      axios.put(this.signedUrl, this.fileList[0], {
+    upload2S3(file) {
+      console.log(file.file)
+      return axios.put(this.signedUrl, file.file, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': "image/png"
         },
-        onUploadProgress: progressEvent => {
-          let complete = (progressEvent.loaded / progressEvent.total * 100.).toFixed(2)
-        }
+        // onUploadProgress: progressEvent => {
+        //   let complete = (progressEvent.loaded / progressEvent.total * 100.).toFixed(2)
+        // }
       })
-        .then(({ data }) => {
-          this.$message({
-            message: "上传成功",
-            type: "success"
-          });
-        }).catch(
-          err => {
-            console.log(err)
-          });
     },
     handleUploadSuccess(res, file) {
+
+      this.$message({
+        message: "上传成功",
+        type: "success"
+      });
       console.log("上传成功...")
       this.showFileList = true;
       this.fileList.pop();
-      this.fileList.push({ name: file.name, url: this.dataObj.host + '/' + this.dataObj.key.replace("${filename}", file.name) });
+      this.fileList.push({ name: file.name, url: "https://layman-cloud.s3.ap-northeast-1.amazonaws.com/" + file.name });
       this.emitInput(this.fileList[0].url);
     }
   }
