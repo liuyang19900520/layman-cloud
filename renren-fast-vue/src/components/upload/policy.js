@@ -1,8 +1,9 @@
 import http from '@/utils/httpRequest.js'
-export function policy() {
+export function policy(filename) {
+  console.log(filename)
   return new Promise((resolve, reject) => {
     http({
-      url: http.adornUrl("/thirdparty/s3/policy"),
+      url: http.adornUrl("/thirdparty/s3/policy/" + filename),
       method: "get",
       params: http.adornParams({})
     }).then(({

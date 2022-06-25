@@ -13,12 +13,6 @@ spring:
           filters:
             # 路径重写，将api开头的路径转换成product的路径，类似于转发了
             - RewritePath=/api/(?<segment>/?.*),/$\{segment}
-        - id: admin_route
-          uri: lb://renren-fast
-          predicates:
-            - Path=/api/**
-          filters:
-            - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
 
         - id: third_party_route
           uri: lb://layman-third-party
@@ -27,6 +21,12 @@ spring:
           filters:
             - RewritePath=/api/thirdparty/(?<segment>/?.*),/$\{segment}
 
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
 #        - id: member_route
 #          uri: lb://gulimall-member
 #          predicates:

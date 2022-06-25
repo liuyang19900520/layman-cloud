@@ -1,12 +1,10 @@
-package com.liuyang19900520.laymanmall.coupon;
+package com.liuyang19900520.laymanmall.thirdparty.controller;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -15,12 +13,15 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
-@SpringBootTest
-class LaymanmallCouponApplicationTests {
-
-  @Test
-  void contextLoads() {
-  }
+/**
+ * <p>
+ *
+ * </p>
+ *
+ * @author Max Liu
+ * @since 2022/06/25
+ */
+public class Test {
 
   public static void main(String[] args) {
 
@@ -31,15 +32,11 @@ class LaymanmallCouponApplicationTests {
       "    bucketName - The name of the Amazon S3 bucket. \n\n" +
       "    keyName - A key name that represents a text file. \n" ;
 
-    if (args.length != 2) {
-      System.out.println(usage);
-      System.exit(1);
-    }
 
-    String bucketName = args[0];
-    String keyName = args[1];
+    String bucketName = "layman-cloud";
+    String keyName = "test.txt";
     ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create();
-    Region region = Region.US_EAST_1;
+    Region region = Region.AP_NORTHEAST_1;
     S3Presigner presigner = S3Presigner.builder()
       .region(region)
       .credentialsProvider(credentialsProvider)
