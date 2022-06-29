@@ -1,7 +1,6 @@
 package com.liuyang19900520.laymanmall.thirdparty.controller;
 
 import com.liuyang19900520.laymanmall.common.utils.R;
-import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -32,7 +31,8 @@ public class OssController {
 
     String bucketName = "layman-cloud";
     String keyName = fileName;
-    ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create();
+    ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.create(
+      "layman-account");
 
     Region region = Region.AP_NORTHEAST_1;
     S3Presigner presigner = S3Presigner.builder().region(region)
