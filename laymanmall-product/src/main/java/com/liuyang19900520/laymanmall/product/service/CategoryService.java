@@ -1,23 +1,46 @@
 package com.liuyang19900520.laymanmall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+
 import com.liuyang19900520.laymanmall.common.utils.PageUtils;
 import com.liuyang19900520.laymanmall.product.entity.CategoryEntity;
-
+import com.liuyang19900520.laymanmall.product.vo.Catelog2Vo;
 import java.util.List;
 import java.util.Map;
 
 /**
  * 商品三级分类
  *
- * @author Max Liu
- * @email liuyang19900520@hotmail.com
- * @date 2022-04-26 16:52:22
+ * @author cosmoswong
+ * @email cosmoswong@sina.com
+ * @date 2020-04-23 18:50:19
  */
 public interface CategoryService extends IService<CategoryEntity> {
 
-  List<CategoryEntity> listWithTree();
+    PageUtils queryPage(Map<String, Object> params);
 
-  PageUtils queryPage(Map<String, Object> params);
+    List<CategoryEntity> listWithTree();
+
+
+     void removeMenuByIds(List<Long> asList);
+
+    /**
+     * 找到catelogId的完整路径
+     * [父/子/孙]
+     * @param catelogId
+     * @return
+     */
+    Long[] findCatelogPath(Long catelogId);
+
+    /**
+     * 级联更新所有关联的数据
+     * @param category
+     */
+    void updateCascade(CategoryEntity category);
+
+    List<CategoryEntity> getLevel1Categories();
+
+    Map<String, List<Catelog2Vo>> getCatelogJson();
+
 }
 
