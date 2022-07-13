@@ -1,5 +1,8 @@
 package com.liuyang19900520.laymanmall.product.service.impl;
 
+import com.liuyang19900520.laymanmall.product.service.CategoryBrandRelationService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -11,19 +14,41 @@ import com.liuyang19900520.laymanmall.common.utils.Query;
 import com.liuyang19900520.laymanmall.product.dao.BrandDao;
 import com.liuyang19900520.laymanmall.product.entity.BrandEntity;
 import com.liuyang19900520.laymanmall.product.service.BrandService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("brandService")
 public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> implements BrandService {
 
-    @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        IPage<BrandEntity> page = this.page(
-                new Query<BrandEntity>().getPage(params),
-                new QueryWrapper<BrandEntity>()
-        );
+  @Autowired
+  CategoryBrandRelationService categoryBrandRelationService;
 
-        return new PageUtils(page);
+  @Override
+  public PageUtils queryPage(Map<String, Object> params) {
+    String key = (String) params.get("key");
+    QueryWrapper<BrandEntity> queryWrapper = new QueryWrapper<>();
+    if (StringUtils.isNotEmpty(key)) {
+      queryWrapper.eq("brand_id", key).or().like("name", key);
     }
+    IPage<BrandEntity> page = this.page(
+      new Query<BrandEntity>().getPage(params), queryWrapper
+
+    );
+
+    return new PageUtils(page);
+  }
+
+
+  @Override
+  @Transactional
+  public void updateCascade(BrandEntity brand) {
+    //保证冗余字段的数据一致性
+    this.updateById(brand);
+    //同步更新其他关联表中的数据
+    if (StringUtils.isNotEmpty(brand.getName())) {
+      categoryBrandRelationService.updateBrand(brand.getBrandId(), brand.getName());
+      //  @TODO: 更新其他关联字段
+    }
+  }
 
 }

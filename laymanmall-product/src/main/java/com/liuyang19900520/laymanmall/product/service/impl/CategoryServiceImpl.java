@@ -94,15 +94,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 //       @CacheEvict(value = {"category"},key = "'level1Categorys'"),
 //       @CacheEvict(value = {"category"},key = "'getCatelogJson'")
 //    })
-    @CacheEvict(value = {"category"},allEntries = true)
+    //@CacheEvict(value = {"category"},allEntries = true)
     @Override
-    @Transactional
+    //@Transactional
     public void updateCascade(CategoryEntity category) {
         this.updateById(category);
         relationService.updateCategory(category.getCatId(),category.getName());
     }
 
-    @Cacheable(value = {"category"},key = "'level1Categorys'")
+    //@Cacheable(value = {"category"},key = "'level1Categorys'")
     @Override
     public List<CategoryEntity> getLevel1Categories() {
         log.info("查询一级分类数据");
