@@ -10,6 +10,7 @@ import com.liuyang19900520.laymanmall.product.dao.AttrGroupDao;
 import com.liuyang19900520.laymanmall.product.entity.AttrEntity;
 import com.liuyang19900520.laymanmall.product.entity.AttrGroupEntity;
 import com.liuyang19900520.laymanmall.product.service.AttrGroupService;
+import com.liuyang19900520.laymanmall.product.service.AttrService;
 import com.liuyang19900520.laymanmall.product.service.SkuImagesService;
 import com.liuyang19900520.laymanmall.product.vo.AttrGroupWithAttrVo;
 import com.liuyang19900520.laymanmall.product.vo.SpuItemAttrGroupVo;
@@ -30,7 +31,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     AttrAttrgroupRelationDao attrAttrgroupRelationDao;
 
     @Autowired
-    SkuImagesService.AttrService attrService;
+    AttrService attrService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {

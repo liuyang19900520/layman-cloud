@@ -1,6 +1,5 @@
 package com.liuyang19900520.laymanmall.product.service.impl;
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,8 +16,9 @@ import com.liuyang19900520.laymanmall.product.entity.AttrAttrgroupRelationEntity
 import com.liuyang19900520.laymanmall.product.entity.AttrEntity;
 import com.liuyang19900520.laymanmall.product.entity.AttrGroupEntity;
 import com.liuyang19900520.laymanmall.product.entity.CategoryEntity;
+import com.liuyang19900520.laymanmall.product.service.AttrService;
 import com.liuyang19900520.laymanmall.product.service.CategoryService;
-import com.liuyang19900520.laymanmall.product.service.SkuImagesService.AttrService;
+
 import com.liuyang19900520.laymanmall.product.vo.AttrGroupRelationVo;
 import com.liuyang19900520.laymanmall.product.vo.AttrResponseVo;
 import com.liuyang19900520.laymanmall.product.vo.AttrVo;
