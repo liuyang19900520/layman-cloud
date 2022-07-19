@@ -12,6 +12,7 @@ import com.liuyang19900520.laymanmall.common.to.SpuBoundTo;
 import com.liuyang19900520.laymanmall.common.to.es.SkuEsModel;
 import com.liuyang19900520.laymanmall.common.utils.PageUtils;
 import com.liuyang19900520.laymanmall.common.utils.Query;
+import com.liuyang19900520.laymanmall.common.utils.R;
 import com.liuyang19900520.laymanmall.product.dao.SpuInfoDao;
 import com.liuyang19900520.laymanmall.product.entity.BrandEntity;
 import com.liuyang19900520.laymanmall.product.entity.CategoryEntity;
@@ -21,6 +22,7 @@ import com.liuyang19900520.laymanmall.product.entity.SkuInfoEntity;
 import com.liuyang19900520.laymanmall.product.entity.SkuSaleAttrValueEntity;
 import com.liuyang19900520.laymanmall.product.entity.SpuInfoDescEntity;
 import com.liuyang19900520.laymanmall.product.entity.SpuInfoEntity;
+import com.liuyang19900520.laymanmall.product.feign.CouponFenService;
 import com.liuyang19900520.laymanmall.product.service.AttrService;
 import com.liuyang19900520.laymanmall.product.service.BrandService;
 import com.liuyang19900520.laymanmall.product.service.CategoryService;
@@ -80,8 +82,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Autowired
     SkuSaleAttrValueService skuSaleAttrValueService;
 
-    //@Autowired
-    //CouponFenService couponFenService;
+    @Autowired
+    CouponFenService couponFenService;
 
     @Autowired
     BrandService brandService;
@@ -152,10 +154,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         BeanUtils.copyProperties(bounds,spuBoundTo);
         spuBoundTo.setSpuId(spuInfoEntity.getId());
 
-        //R r = couponFenService.saveSpuBounds(spuBoundTo);
-        //if(r.getCode() != 0){
-          //  log.error("保存远程SPU积分信息失败");
-        //}
+        R r = couponFenService.saveSpuBounds(spuBoundTo);
+        if(r.getCode() != 0){
+            log.error("保存远程SPU积分信息失败");
+        }
 
         //5. 保存SPU对应的所有SKU信息
         List<Skus> skus = spuSaveVo.getSkus();
@@ -182,7 +184,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 skuInfoEntity.setSkuDefaultImg(defaultImg);
                 skuInfoEntity.setSaleCount(0L);
 
-                //skuInfoService.saveSkuInfo(skuInfoEntity);
+                skuInfoService.saveSkuInfo(skuInfoEntity);
 
                 //5.2 SKU的图片信息；pms_spu_images
                 List<Images> images = item.getImages();
@@ -215,12 +217,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 BeanUtils.copyProperties(item,skuReductionTo);
                 skuReductionTo.setSkuId(skuInfoEntity.getSkuId());
 
-//                if(skuReductionTo.getFullCount() <=0 || skuReductionTo.getFullPrice().compareTo(new BigDecimal("0")) == 1){
-//                    R r1 = couponFenService.saveSkuReduction(skuReductionTo);
-//                    if(r1.getCode() != 0){
-//                        log.error("保存远程SKU优惠信息失败");
-//                    }
-//                }
+                if(skuReductionTo.getFullCount() <=0 || skuReductionTo.getFullPrice().compareTo(new BigDecimal("0")) == 1){
+                    R r1 = couponFenService.saveSkuReduction(skuReductionTo);
+                    if(r1.getCode() != 0){
+                        log.error("保存远程SKU优惠信息失败");
+                    }
+                }
 
 
 

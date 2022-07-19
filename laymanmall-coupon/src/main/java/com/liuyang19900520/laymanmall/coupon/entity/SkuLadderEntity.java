@@ -2,18 +2,16 @@ package com.liuyang19900520.laymanmall.coupon.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
 import java.io.Serializable;
-import java.util.Date;
+import java.math.BigDecimal;
 import lombok.Data;
 
 /**
  * 商品阶梯价格
- * 
- * @author Max Liu
- * @email liuyang19900520@hotmail.com
- * @date 2022-04-26 18:38:49
+ *
+ * @author cosmoswong
+ * @email cosmoswong@sina.com
+ * @date 2020-04-23 23:38:48
  */
 @Data
 @TableName("sms_sku_ladder")
