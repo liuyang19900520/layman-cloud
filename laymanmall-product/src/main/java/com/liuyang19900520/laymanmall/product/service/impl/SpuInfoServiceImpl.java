@@ -4,8 +4,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
-import com.liuyang19900520.laymanmall.common.constant.ProductConstant;
 import com.liuyang19900520.laymanmall.common.to.SkuHasStockVo;
 import com.liuyang19900520.laymanmall.common.to.SkuReductionTo;
 import com.liuyang19900520.laymanmall.common.to.SpuBoundTo;
@@ -23,6 +21,7 @@ import com.liuyang19900520.laymanmall.product.entity.SkuSaleAttrValueEntity;
 import com.liuyang19900520.laymanmall.product.entity.SpuInfoDescEntity;
 import com.liuyang19900520.laymanmall.product.entity.SpuInfoEntity;
 import com.liuyang19900520.laymanmall.product.feign.CouponFenService;
+import com.liuyang19900520.laymanmall.product.feign.WareFeignService;
 import com.liuyang19900520.laymanmall.product.service.AttrService;
 import com.liuyang19900520.laymanmall.product.service.BrandService;
 import com.liuyang19900520.laymanmall.product.service.CategoryService;
@@ -92,7 +91,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     CategoryService categoryService;
 
     //@Autowired
-    //private WareFeignService wareFeignService;
+    private WareFeignService wareFeignService;
 
     //@Autowired
     //SearchFeignService searchFeignService;
@@ -303,18 +302,18 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         }).collect(Collectors.toList());
 
         //取得sku所对应的库存信息，即是否还有库存，为封装SkuEsModel的HasStock属性服务
-//        Map<Long, Boolean> stockMap = null;
-//        try {
-//            List<Long> skuInfoSkuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
-//            R skuHasStock = wareFeignService.getSkuHasStock(skuInfoSkuIds);
-//
-//            stockMap = skuHasStock.getData(new TypeReference<List<SkuHasStockVo>>(){}).stream().collect(Collectors.toMap(SkuHasStockVo::getSkuId, SkuHasStockVo::getHasStock));
-//        } catch (Exception e) {
-//            log.error("库存服务查询异常：原因{}",e);
-//        }
+        Map<Long, Boolean> stockMap = null;
+        try {
+            List<Long> skuInfoSkuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
+            R skuHasStock = wareFeignService.getSkuHasStock(skuInfoSkuIds);
+
+            stockMap = skuHasStock.getData(new TypeReference<List<SkuHasStockVo>>(){}).stream().collect(Collectors.toMap(SkuHasStockVo::getSkuId, SkuHasStockVo::getHasStock));
+        } catch (Exception e) {
+            log.error("库存服务查询异常：原因{}",e);
+        }
 
         //封装每个SKU的信息
-        //Map<Long, Boolean> finalStockMap = stockMap;
+        Map<Long, Boolean> finalStockMap = stockMap;
         List<SkuEsModel> collect = skuInfoEntities.stream().map(item -> {
             //组装需要的数据
             SkuEsModel skuEsModel = new SkuEsModel();
@@ -325,11 +324,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
             //hasStock
             //TODo 1.发送远程调用，查询库存系统是否有库存
-//            if(finalStockMap == null){
-//                skuEsModel.setHasStock(true);
-//            }else{
-//                skuEsModel.setHasStock(finalStockMap.get(item.getSkuId()));
-//            }
+            if(finalStockMap == null){
+                skuEsModel.setHasStock(true);
+            }else{
+                skuEsModel.setHasStock(finalStockMap.get(item.getSkuId()));
+            }
 
             //hotScore
             //TODO 2. 热度评分，默认0
