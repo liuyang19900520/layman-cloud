@@ -16,7 +16,7 @@
     <module>laymanmall-member</module>
     <module>laymanmall-product</module>
     <module>laymanmall-order</module>
-
+    <module>laymanmall-search</module>
     <module>laymanmall-third-party</module>
     <module>laymanmall-ware</module>
     <module>laymanmall-gateway</module>
