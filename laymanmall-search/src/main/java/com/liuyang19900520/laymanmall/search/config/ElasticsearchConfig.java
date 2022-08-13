@@ -22,6 +22,7 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 @Data
 public class ElasticsearchConfig extends AbstractElasticsearchConfiguration {
 
+
   private String host;
   private Integer port;
 
