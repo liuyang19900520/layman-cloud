@@ -90,7 +90,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Autowired
     CategoryService categoryService;
 
-    //@Autowired
+    @Autowired
     private WareFeignService wareFeignService;
 
     //@Autowired
