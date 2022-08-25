@@ -1,7 +1,8 @@
 package com.liuyang19900520.laymanmall.search.repository;
 
 import com.liuyang19900520.laymanmall.search.vo.Product;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import java.util.List;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Repository;
  * @since 2022/08/13
  */
 @Repository
-public interface ProductDao extends ElasticsearchRepository<Product, Long> {
+public interface ProductDao extends CrudRepository<Product, Long> {
+
+  List<Product>  findByTitle(String title);
 
 }

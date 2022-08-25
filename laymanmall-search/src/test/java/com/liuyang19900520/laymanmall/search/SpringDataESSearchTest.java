@@ -44,7 +44,7 @@ public class SpringDataESSearchTest {
   public void termQuery() {
     TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("category", "手机");
 
-    Iterable<Product> products = productDao.search(termQueryBuilder);
+    Iterable<Product> products = productDao.findAll();
     for (Product product : products) {
       System.out.println(product);
     }
@@ -60,7 +60,7 @@ public class SpringDataESSearchTest {
     //设置查询分页
     PageRequest pageRequest = PageRequest.of(currentPage, pageSize);
     TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("title", "小米");
-    Iterable<Product> products = productDao.search(termQueryBuilder, pageRequest);
+    Iterable<Product> products = productDao.findByTitle("小米");
     for (Product product : products) {
       System.out.println(product);
     }

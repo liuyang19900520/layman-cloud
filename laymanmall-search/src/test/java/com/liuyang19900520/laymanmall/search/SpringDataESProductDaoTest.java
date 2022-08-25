@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -107,8 +106,8 @@ public class SpringDataESProductDaoTest {
     //设置查询分页
     PageRequest pageRequest = PageRequest.of(currentPage, pageSize, sort);
     //分页查询
-    Page<Product> productPage = productDao.findAll(pageRequest);
-    for (Product Product : productPage.getContent()) {
+    Iterable<Product> all = productDao.findAll();
+    for (Product Product : all) {
       System.out.println(Product);
     }
   }
