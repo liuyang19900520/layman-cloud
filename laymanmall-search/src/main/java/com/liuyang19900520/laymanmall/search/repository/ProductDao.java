@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductDao extends CrudRepository<Product, Long> {
 
-  List<Product>  findByTitle(String title);
+  List<Product> findByTitle(String title);
 
 }
