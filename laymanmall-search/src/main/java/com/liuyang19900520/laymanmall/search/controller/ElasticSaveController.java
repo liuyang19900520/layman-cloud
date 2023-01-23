@@ -19,25 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ElasticSaveController {
 
-    @Autowired
-    ProductSaveService productSaveService;
+  @Autowired
+  ProductSaveService productSaveService;
 
-    @PostMapping("product")
-    public R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels){
+  @PostMapping("product")
+  public R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels) {
 
-        boolean status=false;
-        try {
-            status = productSaveService.productStatusUp(skuEsModels);
-        } catch (IOException e) {
-            log.error("商品上架错误{}",e);
-            return R.error(BizCodeEnum.PRODUCT_EXCEPTION.getCode(),BizCodeEnum.PRODUCT_EXCEPTION.getMsg());
-        }
-
-        if(status){
-            return R.error(BizCodeEnum.PRODUCT_EXCEPTION.getCode(),BizCodeEnum.PRODUCT_EXCEPTION.getMsg());
-        }else {
-            return R.ok();
-        }
-
+    boolean status = false;
+    try {
+      status = productSaveService.productStatusUp(skuEsModels);
+    } catch (IOException e) {
+      log.error("商品上架错误{}", e);
+      return R.error(BizCodeEnum.PRODUCT_EXCEPTION.getCode(),
+        BizCodeEnum.PRODUCT_EXCEPTION.getMsg());
     }
+
+    if (status) {
+      return R.error(BizCodeEnum.PRODUCT_EXCEPTION.getCode(),
+        BizCodeEnum.PRODUCT_EXCEPTION.getMsg());
+    } else {
+      return R.ok();
+    }
+
+  }
 }

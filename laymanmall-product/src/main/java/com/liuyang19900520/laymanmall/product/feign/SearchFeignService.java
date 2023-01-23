@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient("layman-search")
 public interface SearchFeignService {
-    @PostMapping("/search/save/product")
-    R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels);
+
+  @PostMapping("/search/save/product")
+  R productStatusUp(@RequestBody List<SkuEsModel> skuEsModels);
 }

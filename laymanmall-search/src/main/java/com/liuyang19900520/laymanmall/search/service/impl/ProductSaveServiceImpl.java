@@ -2,7 +2,7 @@ package com.liuyang19900520.laymanmall.search.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.liuyang19900520.laymanmall.common.to.es.SkuEsModel;
-import com.liuyang19900520.laymanmall.search.config.ElasticsearchConfig;
+import com.liuyang19900520.laymanmall.search.config.LaymanElasticSearchConfig;
 import com.liuyang19900520.laymanmall.search.constant.EsConstant;
 import com.liuyang19900520.laymanmall.search.service.ProductSaveService;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class ProductSaveServiceImpl implements ProductSaveService {
       bulkRequest.add(indexRequest);
     }
 
-    BulkResponse bulk = client.bulk(bulkRequest, ElasticsearchConfig.COMMON_OPTIONS);
+    BulkResponse bulk = client.bulk(bulkRequest, LaymanElasticSearchConfig.COMMON_OPTIONS);
 
     //TODO 如果批量错误
     boolean hasFailures = bulk.hasFailures();
@@ -50,6 +50,7 @@ public class ProductSaveServiceImpl implements ProductSaveService {
     }).collect(Collectors.toList());
 
     log.info("商品上架完成：{}", collect);
+
     return hasFailures;
   }
 }

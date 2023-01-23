@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 /**
  * 采购信息
  *
@@ -31,95 +30,99 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("ware/purchase")
 public class PurchaseController {
-    @Autowired
-    private PurchaseService purchaseService;
 
-    /**
-     * 完成采购
-     * @return
-     */
-    @PostMapping("/done")
-    public R finishPurchase(@RequestBody PurchaseFinishVo finishVo){
-        purchaseService.done(finishVo);
-        return R.ok();
-    }
+  @Autowired
+  private PurchaseService purchaseService;
 
-    /**
-     * 领取采购单
-     * @param ids 采购单ID集合
-     * @return
-     */
-    @PostMapping("/received")
-    public R received(@RequestBody List<Long> ids){
-        purchaseService.received(ids);
+  /**
+   * 完成采购
+   *
+   * @return
+   */
+  @PostMapping("/done")
+  public R finishPurchase(@RequestBody PurchaseFinishVo finishVo) {
+    purchaseService.done(finishVo);
+    return R.ok();
+  }
 
-        return R.ok();
-    }
-    @PostMapping("/merge")
-    public R merge(@RequestBody MergeVo mergeVo){
-        purchaseService.mergePurchase(mergeVo);
-        return R.ok();
-    }
+  /**
+   * 领取采购单
+   *
+   * @param ids 采购单ID集合
+   * @return
+   */
+  @PostMapping("/received")
+  public R received(@RequestBody List<Long> ids) {
+    purchaseService.received(ids);
 
+    return R.ok();
+  }
 
-    @GetMapping("/unreceive/list")
-    public R unreceiveList(@RequestParam Map<String, Object> params){
-        PageUtils page = purchaseService.queryPageUnreceived(params);
-
-        return R.ok().put("page", page);
-    }
-
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = purchaseService.queryPage(params);
-
-        return R.ok().put("page", page);
-    }
+  @PostMapping("/merge")
+  public R merge(@RequestBody MergeVo mergeVo) {
+    purchaseService.mergePurchase(mergeVo);
+    return R.ok();
+  }
 
 
-    /**
-     * 信息
-     */
-    @RequestMapping("/info/{id}")
-    public R info(@PathVariable("id") Long id){
-		PurchaseEntity purchase = purchaseService.getById(id);
+  @GetMapping("/unreceive/list")
+  public R unreceiveList(@RequestParam Map<String, Object> params) {
+    PageUtils page = purchaseService.queryPageUnreceived(params);
 
-        return R.ok().put("purchase", purchase);
-    }
+    return R.ok().put("page", page);
+  }
 
-    /**
-     * 保存
-     */
-    @RequestMapping("/save")
-    public R save(@RequestBody PurchaseEntity purchase){
-        purchase.setUpdateTime(new Date());
-        purchase.setCreateTime(new Date());
-		purchaseService.save(purchase);
+  /**
+   * 列表
+   */
+  @RequestMapping("/list")
+  public R list(@RequestParam Map<String, Object> params) {
+    PageUtils page = purchaseService.queryPage(params);
 
-        return R.ok();
-    }
+    return R.ok().put("page", page);
+  }
 
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
-    public R update(@RequestBody PurchaseEntity purchase){
-		purchaseService.updateById(purchase);
 
-        return R.ok();
-    }
+  /**
+   * 信息
+   */
+  @RequestMapping("/info/{id}")
+  public R info(@PathVariable("id") Long id) {
+    PurchaseEntity purchase = purchaseService.getById(id);
 
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-		purchaseService.removeByIds(Arrays.asList(ids));
+    return R.ok().put("purchase", purchase);
+  }
 
-        return R.ok();
-    }
+  /**
+   * 保存
+   */
+  @RequestMapping("/save")
+  public R save(@RequestBody PurchaseEntity purchase) {
+    purchase.setUpdateTime(new Date());
+    purchase.setCreateTime(new Date());
+    purchaseService.save(purchase);
+
+    return R.ok();
+  }
+
+  /**
+   * 修改
+   */
+  @RequestMapping("/update")
+  public R update(@RequestBody PurchaseEntity purchase) {
+    purchaseService.updateById(purchase);
+
+    return R.ok();
+  }
+
+  /**
+   * 删除
+   */
+  @RequestMapping("/delete")
+  public R delete(@RequestBody Long[] ids) {
+    purchaseService.removeByIds(Arrays.asList(ids));
+
+    return R.ok();
+  }
 
 }
