@@ -5,7 +5,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
 import com.liuyang19900520.laymanmall.common.utils.PageUtils;
 import com.liuyang19900520.laymanmall.common.utils.Query;
 import com.liuyang19900520.laymanmall.product.dao.CategoryDao;
@@ -23,17 +22,12 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Slf4j
@@ -120,7 +114,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
      * @return
      */
 
-    @Cacheable(value = {"category"},key = "#root.methodName")
+    //@Cacheable(value = {"category"},key = "#root.methodName")
     @Override
     public Map<String, List<Catelog2Vo>> getCatelogJson() {
         log.info("查询数据库");

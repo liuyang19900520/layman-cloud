@@ -21,3 +21,4 @@ buildNumber.properties
 **/.gitignore
 
 
+/renren-fast-vue/build/
